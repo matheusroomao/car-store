@@ -10,7 +10,7 @@ use function app;
 class CarItemRepository extends AbstractRepository implements CarItemInterface
 {
     private $model = CarItem::class;
-    private array $relationships = ['car','item'];
+    private array $relationships = ['item','car'];
     private array $dependencies = [];
     private array $unique = ['name'];
     private array $upload = [];
