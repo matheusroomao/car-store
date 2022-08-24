@@ -1,20 +1,28 @@
 <?php
-namespace App\Repository;
+namespace App\Repository\Admin\Business;
 
 use App\Models\User;
+use App\Repository\AbstractRepository;
+use App\Repository\Admin\Contract\UserInterface;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use function event;
 
-class LoginRepository implements LoginInterface
+class UserRepository extends AbstractRepository implements UserInterface
 {
     private $model = User::class;
+    private array $relationships = ['cars'];
+    private array $dependencies = ['cars'];
+    private array $unique = ['email'];
+    private array $upload = [];
 
     public function __construct()
     {
         $this->model = app($this->model);
+        parent::__construct($this->model, $this->relationships, $this->dependencies, $this->unique,$this->upload);
     }
 
     public function login(Request $request)
@@ -29,6 +37,7 @@ class LoginRepository implements LoginInterface
             if (Hash::check($request->password, $model->password) === true) {
                 $token = $model->createToken($model->email . '-' . $model->email);
                 $model->token = $token->plainTextToken;
+                $model->group = $model->group();
                 unset($model->created_at, $model->updated_at,$model->type);
                 $this->setCode(200);
                 return $model;
@@ -117,15 +126,6 @@ class LoginRepository implements LoginInterface
             return null;
         }
     }
-
-    public function getCode(): int
-    {
-        return $this->code;
-    }
-
-    protected function setCode($code)
-    {
-        $this->code = $code;
-    }
+  
 }
 

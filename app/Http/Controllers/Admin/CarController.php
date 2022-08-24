@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CarRequest;
+use App\Repository\Admin\Contract\CarInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, CarInterface $interface): JsonResponse
     {
-        //
+        return response()->json($interface->findAll($request),$interface->getCode());
     }
 
     /**
@@ -23,9 +26,9 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CarRequest $request, CarInterface $interface): JsonResponse
     {
-        //
+        return response()->json($interface->save($request),$interface->getCode());
     }
 
     /**
@@ -34,9 +37,9 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, CarInterface $interface): JsonResponse
     {
-        //
+        return response()->json($interface->findById($id),$interface->getCode());
     }
 
     /**
@@ -46,9 +49,9 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CarRequest $request, $id, CarInterface $interface): JsonResponse
     {
-        //
+        return response()->json($interface->update($id, $request),$interface->getCode());
     }
 
     /**
@@ -57,8 +60,8 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, CarInterface $interface): JsonResponse
     {
-        //
+        return response()->json($interface->deleteById($id),$interface->getCode());
     }
 }

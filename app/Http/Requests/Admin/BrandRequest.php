@@ -9,7 +9,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use function auth;
 use function response;
 
-class CarItemRequest extends FormRequest
+class BrandRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,19 +29,14 @@ class CarItemRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        if (empty(intval($this->route()->parameter('car_item')))) {
+        if (empty(intval($this->route()->parameter('brand')))) {
             return [
-                'car_id' => ['required', 'int'],
-                'item_id' => ['required', 'int'],
+                'name' => ['required', 'string', 'max:191', 'min:2','unique:App\Models\Brand,name'],
             ];
         } else {
-            if ($this->request->has('car_id')) {
-                $car_id = ['required', 'int'];
-                $rules['car_id'] = $car_id;
-            }
-             if ($this->request->has('item_id')) {
-                $item_id = ['required', 'int'];
-                $rules['item_id'] = $item_id;
+            if ($this->request->has('name')) {
+                $name = ['required', 'string', 'max:191', 'min:2','unique:App\Models\Brand,name'];
+                $rules['name'] = $name;
             }
         }
         return $rules;

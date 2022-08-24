@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RequestRegistration;
+use App\Repository\Admin\Contract\UserInterface;
 use App\Repository\LoginInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,6 +12,17 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(RequestRegistration $request, UserInterface $interface): JsonResponse
+    {
+        return response()->json($interface->save($request),$interface->getCode());
+    }
+    
     /**
      * @param LoginRequest $request
      * @param LoginInterface $interface

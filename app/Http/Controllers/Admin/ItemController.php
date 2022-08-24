@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CarItemRequest;
-use App\Repository\Admin\Contract\CarItemInterface;
+use App\Http\Requests\Admin\ItemRequest;
+use App\Repository\Admin\Contract\ItemInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class CarItemController extends Controller
+class ItemController extends Controller
 {
       /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, CarItemInterface $interface): JsonResponse
+    public function index(Request $request, ItemInterface $interface): JsonResponse
     {
         return response()->json($interface->findAll($request),$interface->getCode());
     }
@@ -26,7 +26,7 @@ class CarItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CarItemRequest $request, CarItemInterface $interface): JsonResponse
+    public function store(ItemRequest $request, ItemInterface $interface): JsonResponse
     {
         return response()->json($interface->save($request),$interface->getCode());
     }
@@ -37,7 +37,7 @@ class CarItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, CarItemInterface $interface): JsonResponse
+    public function show($id, ItemInterface $interface): JsonResponse
     {
         return response()->json($interface->findById($id),$interface->getCode());
     }
@@ -49,7 +49,7 @@ class CarItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CarItemRequest $request, $id, CarItemInterface $interface): JsonResponse
+    public function update(ItemRequest $request, $id, ItemInterface $interface): JsonResponse
     {
         return response()->json($interface->update($id, $request),$interface->getCode());
     }
@@ -60,7 +60,7 @@ class CarItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, CarItemInterface $interface): JsonResponse
+    public function destroy($id, ItemInterface $interface): JsonResponse
     {
         return response()->json($interface->deleteById($id),$interface->getCode());
     }

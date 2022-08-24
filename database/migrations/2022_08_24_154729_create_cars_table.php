@@ -17,6 +17,7 @@ class CreateCarsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
+            $table->integer('km');
             $table->double('motor');
             $table->integer('year');
             $table->enum('change',['manual','automatic']);
@@ -26,12 +27,11 @@ class CreateCarsTable extends Migration
             $table->boolean('only_owner');
             $table->boolean('ipva_paid');
             $table->boolean('licensed');
-            $table->boolean('active');
+            $table->boolean('active')->default(true);
             $table->string('bodywork');
             $table->text('description')->nullable();
-            $table->string('image');
-            $table->foreignId('car_item_id')->references('id')->on('car_items');
             $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('brand_id')->references('id')->on('brands');
             $table->timestamps();
         });
     }

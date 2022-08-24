@@ -10,11 +10,16 @@ class CarItem extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'car_id',
+        'item_id'
     ];
 
-    public function cars()
+    public function car()
     {
-        return $this->hasMany(Car::class);
+        return $this->belongsTo(Car::class);
+    }
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
     }
 }
